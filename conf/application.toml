@@ -1,0 +1,22 @@
+[server]
+addr = "0.0.0.0:8000"
+timeout = "2s"
+
+[database]
+host = "139.196.218.71"
+port = "3306"
+dbname = "examination"
+user = "root"
+password = "root"
+
+
+[database]
+    address = "139.196.218.71:3306"
+    dsn = "root:root@tcp(139.196.218.71:3306)/examination?timeout=1s&readTimeout=1s&writeTimeout=1s&parseTime=true&loc=Local&charset=utf8mb4,utf8"
+    readDSN = ["root:root@tcp(139.196.218.71:3306)/examination?timeout=1s&readTimeout=1s&writeTimeout=1s&parseTime=true&loc=Local&charset=utf8mb4,utf8","root:root@tcp(139.196.218.71:3306)/examination?timeout=1s&readTimeout=1s&writeTimeout=1s&parseTime=true&loc=Local&charset=utf8,utf8mb4"]
+    active = 20
+    idle = 10
+    idleTimeout ="4h"
+    queryTimeout = "200ms"
+    execTimeout = "300ms"
+    tranTimeout = "400ms"
