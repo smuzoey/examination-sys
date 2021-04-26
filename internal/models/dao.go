@@ -15,6 +15,9 @@ type Dao interface {
 
 	QueryStudent(id string) (*Student, error)
 	QueryTeacher(id string) (*Teacher, error)
+
+	// exam
+	s(id string) (*ExamManage, error)
 }
 
 type dao struct {
