@@ -8,4 +8,5 @@ import (
 func init() {
 	beego.Router("/", &controllers.MainController{})
 	beego.Router("login", &controllers.UserController{}, "post:Login")
+	beego.Router("exams/:pageNum/:pageSize", &controllers.ExamController{}, "get:FindExamByPage")
 }

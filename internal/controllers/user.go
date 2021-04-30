@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
-	"examination-sys/internal/models"
+	"examination-sys/internal/dao"
 	"examination-sys/internal/util"
 	"github.com/astaxie/beego"
 )
@@ -24,10 +24,10 @@ func (this *UserController) Login() {
 		util.Json(this.Controller, "", "error", -500)
 		return
 	}
-	if s, err := models.DB.QueryStudent(user.Name); err == nil {
+	if s, err := dao.DB.QueryStudent(user.Name); err == nil {
 		util.Json(this.Controller, s, "success test", 200)
 		return
-	} else if t, err := models.DB.QueryTeacher(user.Name); err == nil {
+	} else if t, err := dao.DB.QueryTeacher(user.Name); err == nil {
 		util.Json(this.Controller, t, "success", 200)
 		return
 	}
