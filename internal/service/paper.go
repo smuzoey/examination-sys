@@ -5,10 +5,11 @@ import (
 	"examination-sys/internal/models"
 )
 
-func QueryPaperById(id int) (*[]models.Paper, error) {
-	paper, err := dao.DB.QueryPaperById(id)
+func QueryPaperQuestionById(id int) (*[]models.SelectQuestion, error) {
+	//paper, err := dao.DB.QueryPaperById(id)
+	selectQuestion, err := dao.DB.QuerySelectQuestionByPaperId(id)
 	if err != nil {
 		return nil, err
 	}
-	return paper, nil
+	return selectQuestion, nil
 }

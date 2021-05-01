@@ -13,7 +13,7 @@ type PaperController struct {
 
 func (this *PaperController) FindPaperById() {
 	paperId, _ := strconv.Atoi(this.Ctx.Input.Param(":paperId"))
-	res, err := service.QueryPaperById(paperId)
+	res, err := service.QueryPaperQuestionById(paperId)
 	if err != nil {
 		util.Json(this.Controller, nil, "err", 500)
 		return

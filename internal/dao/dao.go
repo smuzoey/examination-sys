@@ -24,6 +24,9 @@ type Dao interface {
 
 	// paper
 	QueryPaperById(paperId int) (*[]models.Paper, error)
+
+	// question
+	QuerySelectQuestionByPaperId(paperId int) (*[]models.SelectQuestion, error)
 }
 
 type dao struct {
