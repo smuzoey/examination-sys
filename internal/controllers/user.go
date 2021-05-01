@@ -21,7 +21,7 @@ func (this *UserController) Login() {
 	user := &User{}
 	err := json.Unmarshal(data, &user)
 	if err != nil {
-		util.Json(this.Controller, "", "error", -500)
+		util.Json(this.Controller, "", "error", 500)
 		return
 	}
 	if s, err := dao.DB.QueryStudent(user.Name); err == nil {
@@ -31,6 +31,6 @@ func (this *UserController) Login() {
 		util.Json(this.Controller, t, "success", 200)
 		return
 	}
-	util.Json(this.Controller, nil, "err", -500)
+	util.Json(this.Controller, nil, "err", 500)
 	return
 }

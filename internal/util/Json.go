@@ -19,3 +19,11 @@ func Json(c beego.Controller, data interface{}, message string, code int) {
 	c.Data["json"] = &r
 	c.ServeJSON()
 }
+
+/*
+	目前code介绍
+	200 正确
+	500 服务器错误
+	401 权限不足
+	402 输入数据错误、不符合规范
+*/

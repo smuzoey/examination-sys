@@ -19,6 +19,11 @@ type Dao interface {
 
 	// exam
 	QueryExamByPage(pageNum, pageSize int) (*models.Page, error)
+	QueryExamById(id int) (*models.ExamManage, error)
+	AddExam(e *models.ExamManage) error
+
+	// paper
+	QueryPaperById(paperId int) (*[]models.Paper, error)
 }
 
 type dao struct {
