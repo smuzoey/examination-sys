@@ -18,6 +18,8 @@ func (this *PaperController) FindPaperById() {
 		util.Json(this.Controller, nil, "err", 500)
 		return
 	}
-	util.Json(this.Controller, res, "success", 200)
+	//util.Json(this.Controller, res, "success", 200)
+	this.Data["json"] = res
+	this.ServeJSON()
 	return
 }

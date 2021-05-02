@@ -27,6 +27,12 @@ type Dao interface {
 
 	// question
 	QuerySelectQuestionByPaperId(paperId int) (*[]models.SelectQuestion, error)
+	QueryFillQuestionByPaperId(paperId int) (*[]models.FillQuestion, error)
+	QueryJudgeQuestionByPaperId(paperId int) (*[]models.JudgeQuestion, error)
+
+	// message
+	QueryMessageByPage(pageNum, pageSize int) (*models.Page, error)
+	AddMessage(m *models.Message) error
 }
 
 type dao struct {
