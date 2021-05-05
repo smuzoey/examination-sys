@@ -11,6 +11,8 @@ func init() {
 	beego.Router("exams/:pageNum/:pageSize", &controllers.ExamController{}, "get:FindExamByPage")
 	beego.Router("exam/:examCode", &controllers.ExamController{}, "get:FindExamById")
 	beego.Router("paper/:paperId", &controllers.PaperController{}, "get:FindPaperById")
+	beego.Router("messages/:pageNum/:pageSize", &controllers.MessageController{}, "get:FindMessageByPage")
+	beego.Router("message", &controllers.MessageController{}, "post:AddMessage")
 }
 
 /*

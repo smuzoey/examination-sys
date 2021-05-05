@@ -33,6 +33,11 @@ type Dao interface {
 	// message
 	QueryMessageByPage(pageNum, pageSize int) (*models.Page, error)
 	AddMessage(m *models.Message) error
+
+	// score
+	QueryScoreByExamCode(examCode string) (*[]models.Score, error)
+	QueryScoreByStudentId(studentId int) (*[]models.Score, error)
+	AddScore(score *models.Score) error
 }
 
 type dao struct {

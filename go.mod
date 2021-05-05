@@ -11,6 +11,7 @@ require (
 	github.com/prometheus/common v0.10.0
 	github.com/shiena/ansicolor v0.0.0-20200904210342-c7312218db18 // indirect
 	github.com/smartystreets/goconvey v1.6.4
+	google.golang.org/genproto v0.0.0-20190819201941-24fa4b261c55
 	gorm.io/driver/mysql v1.0.5
 	gorm.io/gorm v1.21.6
 )
