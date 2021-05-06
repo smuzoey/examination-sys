@@ -8,7 +8,7 @@ import (
 func (d *dao) QueryExamById(id int) (*models.ExamManage, error) {
 	res := models.ExamManage{}
 	if err := d.orm.Table("exam_manage").Where("examCode= ?", id).Find(&res).Error; err != nil {
-		log.Error("exam_manage query exam(%v)", err)
+		log.Errorf("exam_manage query exam(%v)", err)
 		return nil, err
 	}
 
@@ -18,7 +18,7 @@ func (d *dao) QueryExamById(id int) (*models.ExamManage, error) {
 func (d *dao) AddExam(e *models.ExamManage) error {
 	//if err := d.orm.Model(models.ExamManage{}).Create(e).Error; err != nil {
 	if err := d.orm.Table("exam_manage").Create(e).Error; err != nil {
-		log.Error("exam insert exam error(%v)", err)
+		log.Errorf("exam insert exam error(%v)", err)
 		return err
 	}
 	return nil
@@ -32,12 +32,12 @@ func (d *dao) QueryExamByPage(pageNum, pageSize int) (*models.Page, error) {
 	)
 
 	if err := d.orm.Table("exam_manage").Order("examCode desc").Offset((pageNum - 1) * pageSize).Limit(pageSize).Find(&res).Error; err != nil {
-		log.Error("query exam_manage page err(%v)", err)
+		log.Errorf("query exam_manage page err(%v)", err)
 		return nil, err
 	}
 
 	if err := d.orm.Table("exam_manage").Count(&count).Error; err != nil {
-		log.Error("query exam_manage count(%v)", err)
+		log.Errorf("query exam_manage count(%v)", err)
 		return nil, err
 	}
 

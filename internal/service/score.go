@@ -20,3 +20,11 @@ func QueryScoreByStudentId(studentId int) (*[]models.Score, error) {
 	}
 	return res, nil
 }
+
+func QueryStudentScoreByPage(studentId, pageNum, pageSize int) (*models.Page, error) {
+	res, err := dao.DB.QueryStudentScoreByPage(studentId, pageNum, pageSize)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}

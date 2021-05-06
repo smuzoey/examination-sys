@@ -41,3 +41,11 @@ type JudgeQuestion struct {
 	Level      string `json:"level"`
 	Section    string `json:"section"`
 }
+
+type Question struct {
+	Question string `json:"question"`
+	Subject  string `json:"subject"`
+	Score    string `json:"score"`
+	Section  string `json:"section"`
+	Type     string `json:"type"`
+}
