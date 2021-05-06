@@ -3,6 +3,7 @@ package controllers
 import (
 	"encoding/json"
 	"examination-sys/internal/dao"
+	"examination-sys/internal/models"
 	"examination-sys/internal/service"
 	"examination-sys/internal/util"
 	"github.com/astaxie/beego"
@@ -34,6 +35,17 @@ func (this *UserController) Login() {
 		return
 	}
 	util.Json(this.Controller, nil, "err", 500)
+	return
+}
+
+func (this *UserController) AddStudent() {
+	data := this.Ctx.Input.RequestBody
+	student := models.Student{}
+	if err := json.Unmarshal(data, &student); err != nil {
+		util.Json(this.Controller, nil, "err", 500)
+		return
+	}
+	util.Json(this.Controller, student, "success", 200)
 	return
 }
 

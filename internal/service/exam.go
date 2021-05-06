@@ -31,3 +31,10 @@ func AddExam(exam *models.ExamManage) error {
 	}
 	return nil
 }
+
+func UpdateExam(exam *models.ExamManage) error {
+	if err := dao.DB.UpdateExam(exam); err != nil {
+		return err
+	}
+	return nil
+}

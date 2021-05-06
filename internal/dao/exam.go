@@ -50,3 +50,11 @@ func (d *dao) QueryExamByPage(pageNum, pageSize int) (*models.Page, error) {
 
 	return &pageRes, nil
 }
+
+func (d *dao) UpdateExam(exam *models.ExamManage) error {
+	if err := d.orm.Table("exam_manage").Where("examCode = ?", exam.ExamCode).Updates(exam).Error; err != nil {
+		log.Errorf("exam update all err(%v)", err)
+		return err
+	}
+	return nil
+}

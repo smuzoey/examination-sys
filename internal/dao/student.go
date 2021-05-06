@@ -23,7 +23,7 @@ func (d *dao) QueryStudentByPage(pageNum, pageSize int) (*models.Page, error) {
 		res   []models.Student
 		count int64
 	)
-	if err := d.orm.Table("student").Order("studentId desc").Offset((pageNum - 1) * pageSize).Limit(pageNum).Find(&res).Error; err != nil {
+	if err := d.orm.Table("student").Order("studentId desc").Offset((pageNum - 1) * pageSize).Limit(pageSize).Find(&res).Error; err != nil {
 		log.Errorf("query student by page err(%v)", err)
 		return nil, err
 	}

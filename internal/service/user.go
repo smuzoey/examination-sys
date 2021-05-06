@@ -12,3 +12,10 @@ func QueryStudentByPage(pageNum, pageSize int) (*models.Page, error) {
 	}
 	return res, nil
 }
+
+func AddStudent(s *models.Student) error {
+	if err := dao.DB.AddStudent(s); err != nil {
+		return err
+	}
+	return nil
+}
