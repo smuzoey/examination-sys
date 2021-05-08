@@ -18,9 +18,10 @@ type Dao interface {
 	QueryStudent(id string) (*models.Student, error)
 	QueryStudentByPage(pageNum, pageSize int) (*models.Page, error)
 	AddStudent(student *models.Student) error
-	DeleteStudent(studentId int) error
-	StudentChangePwd(studentId int, pwd string) error
+	DeleteStudent(studentId string) error
+	StudentChangePwd(studentId string, pwd string) error
 	UpdateStudent(student *models.Student) error
+	UpdateStudentSomeValues(s *models.Student) error
 
 	QueryTeacher(id string) (*models.Teacher, error)
 
@@ -41,20 +42,26 @@ type Dao interface {
 	QueryFillQuestionByPaperId(paperId int) (*[]models.FillQuestion, error)
 	QueryJudgeQuestionByPaperId(paperId int) (*[]models.JudgeQuestion, error)
 	QueryQuestionsByPage(pageNum, pageSize int) (*models.Page, error)
-	AddSelectQuestion(question *models.SelectQuestion) error
-	AddFillQuestion(question *models.FillQuestion) error
-	AddJudgeQuestion(question *models.JudgeQuestion) error
+	AddSelectQuestion(question *models.SelectQuestion) (int, error)
+	AddFillQuestion(question *models.FillQuestion) (int, error)
+	AddJudgeQuestion(question *models.JudgeQuestion) (int, error)
+	QuerySelectQuestionByQuestionId(questionId int) (*models.SelectQuestion, error)
+	QueryFillQuestionByQuestionId(questionId int) (*models.FillQuestion, error)
+	QueryJudgeQuestionByQuestionId(questionId int) (*models.JudgeQuestion, error)
+	QueryLastJudgeQuestion() (*models.JudgeQuestion, error)
+	QueryLastSelectQuestion() (*models.SelectQuestion, error)
+	QueryLastFillQuestion() (*models.FillQuestion, error)
 
 	// message
 	QueryMessageByPage(pageNum, pageSize int) (*models.Page, error)
 	AddMessage(m *models.Message) error
 
 	// score
-	QueryAllScores() (*[]models.Score, error)                                       // 所有学生所有成绩
-	QueryScoreByExamCode(examCode string) (*[]models.Score, error)                  // 查询某个考试的所有学生的成绩
-	QueryScoreByStudentId(studentId int) (*[]models.Score, error)                   // 查询某个学生的所有成绩 不分页
-	QueryStudentScoreByPage(studentId, pageNum, pageSize int) (*models.Page, error) // 查询某个学生的所有成绩 分页
-	AddScore(score *models.Score) error                                             // 添加成绩
+	QueryAllScores() (*[]models.Score, error)                                              // 所有学生所有成绩
+	QueryScoreByExamCode(examCode int) (*[]models.Score, error)                            // 查询某个考试的所有学生的成绩
+	QueryScoreByStudentId(studentId string) (*[]models.Score, error)                       // 查询某个学生的所有成绩 不分页
+	QueryStudentScoreByPage(studentId string, pageNum, pageSize int) (*models.Page, error) // 查询某个学生的所有成绩 分页
+	AddScore(score *models.Score) error                                                    // 添加成绩
 }
 
 type dao struct {

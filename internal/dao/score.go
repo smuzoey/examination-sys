@@ -14,7 +14,7 @@ func (d *dao) QueryAllScores() (*[]models.Score, error) {
 	return &res, nil
 }
 
-func (d *dao) QueryScoreByExamCode(examCode string) (*[]models.Score, error) {
+func (d *dao) QueryScoreByExamCode(examCode int) (*[]models.Score, error) {
 	var res []models.Score
 	if err := d.orm.Table("score").Where("examCode=? ", examCode).Find(&res).Error; err != nil {
 		log.Errorf("score query by examCode err(%v)", err)
@@ -24,7 +24,7 @@ func (d *dao) QueryScoreByExamCode(examCode string) (*[]models.Score, error) {
 }
 
 // 不分页 查询 student 全部成绩
-func (d *dao) QueryScoreByStudentId(studentId int) (*[]models.Score, error) {
+func (d *dao) QueryScoreByStudentId(studentId string) (*[]models.Score, error) {
 	var res []models.Score
 	if err := d.orm.Table("score").Where("studentId=?", studentId).Find(&res).Error; err != nil {
 		log.Error("score query by studentId err(%v)", err)
@@ -42,7 +42,7 @@ func (d *dao) AddScore(score *models.Score) error {
 }
 
 // 分页查询 student score
-func (d *dao) QueryStudentScoreByPage(studentId, pageNum, pageSize int) (*models.Page, error) {
+func (d *dao) QueryStudentScoreByPage(studentId string, pageNum, pageSize int) (*models.Page, error) {
 	var (
 		res   []models.Score
 		count int64

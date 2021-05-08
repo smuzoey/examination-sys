@@ -4,7 +4,7 @@ package models
 
 // table: multi_question 1
 type SelectQuestion struct {
-	QuestionId  int    `json:"question_id" gorm:"column:questionId"`
+	QuestionId  int    `json:"questionId" gorm:"column:questionId"`
 	Subject     string `json:"subject"`
 	Question    string `json:"question"`
 	AnswerA     string `json:"answerA" gorm:"column:answerA"`
@@ -20,7 +20,7 @@ type SelectQuestion struct {
 
 // table: file_question 2
 type FillQuestion struct {
-	QuestionId int    `json:"question_id" gorm:"column:questionId"`
+	QuestionId int    `json:"questionId" gorm:"column:questionId"`
 	Subject    string `json:"subject"`
 	Question   string `json:"question"`
 	Answer     string `json:"answer"`
@@ -32,7 +32,7 @@ type FillQuestion struct {
 
 // table: judge_question 3
 type JudgeQuestion struct {
-	QuestionId int    `json:"question_id" gorm:"column:questionId"`
+	QuestionId int    `json:"questionId" gorm:"column:questionId"`
 	Subject    string `json:"subject"`
 	Question   string `json:"question"`
 	Answer     string `json:"answer"`

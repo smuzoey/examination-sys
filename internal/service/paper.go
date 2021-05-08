@@ -2,6 +2,7 @@ package service
 
 import (
 	"examination-sys/internal/dao"
+	"examination-sys/internal/models"
 	"sync"
 )
 
@@ -29,4 +30,11 @@ func QueryPaperQuestionById(id int) (map[int]interface{}, error) {
 	wg.Wait()
 
 	return mp, nil
+}
+
+func AddQuestionToPaper(paper *models.Paper) error {
+	if err := dao.DB.AddPaper(paper); err != nil {
+		return err
+	}
+	return nil
 }

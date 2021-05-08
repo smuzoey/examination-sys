@@ -49,7 +49,7 @@ func (d *dao) AddStudent(student *models.Student) error {
 	return nil
 }
 
-func (d *dao) DeleteStudent(studentId int) error {
+func (d *dao) DeleteStudent(studentId string) error {
 	if err := d.orm.Table("student").Where("studentId = ?", studentId).Delete(&models.Student{}).Error; err != nil {
 		log.Errorf("delete student err(%v)", err)
 		return err
@@ -57,7 +57,7 @@ func (d *dao) DeleteStudent(studentId int) error {
 	return nil
 }
 
-func (d *dao) StudentChangePwd(studentId int, pwd string) error {
+func (d *dao) StudentChangePwd(studentId string, pwd string) error {
 	if err := d.orm.Table("student").Where("studentId=?", studentId).Update("pwd", pwd).Error; err != nil {
 		log.Errorf("student change pwd err(%v)", err)
 		return err
@@ -73,7 +73,10 @@ func (d *dao) UpdateStudent(student *models.Student) error {
 	return nil
 }
 
-//func (d *dao) UpdateStudentSomeValues(s1 *models.Student) error {
-//	var s2 models.Student
-//	if err := d.orm.Table("student").Where()
-//}
+func (d *dao) UpdateStudentSomeValues(s *models.Student) error {
+	if err := d.orm.Table("student").Where("studentId=?", s.StudentId).Updates(s).Error; err != nil {
+		log.Errorf("update student some values error(%v)", err)
+		return err
+	}
+	return nil
+}

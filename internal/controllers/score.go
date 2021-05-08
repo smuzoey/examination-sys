@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"encoding/json"
+	"examination-sys/internal/models"
 	"examination-sys/internal/service"
 	"examination-sys/internal/util"
 	"fmt"
@@ -13,7 +15,7 @@ type ScoreController struct {
 }
 
 func (c *ScoreController) QueryStudentScoreByPage() {
-	StudentId, _ := strconv.Atoi(c.Ctx.Input.Param(":studentId"))
+	StudentId := c.Ctx.Input.Param(":studentId")
 	PageNum, _ := strconv.Atoi(c.Ctx.Input.Param(":pageNum"))
 	PageSize, _ := strconv.Atoi(c.Ctx.Input.Param(":pageSize"))
 
@@ -27,8 +29,7 @@ func (c *ScoreController) QueryStudentScoreByPage() {
 }
 
 func (c *ScoreController) QueryScoresByExamCode() {
-	examCode := c.Ctx.Input.Param(":examCode")
-	fmt.Println("<<<<", examCode)
+	examCode, _ := strconv.Atoi(c.Ctx.Input.Param(":examCode"))
 	res, err := service.QueryScoreByExamCode(examCode)
 	if err != nil {
 		util.Json(c.Controller, nil, "err", 500)
@@ -38,12 +39,31 @@ func (c *ScoreController) QueryScoresByExamCode() {
 }
 
 func (c *ScoreController) QueryScoreByStudentId() {
-	studentId, _ := strconv.Atoi(c.Ctx.Input.Param(":studentId"))
+	studentId := c.Ctx.Input.Param(":studentId")
 	res, err := service.QueryScoreByStudentId(studentId)
 	if err != nil {
-		util.Json(c.Controller, nil, "err", 500)
+		util.Json(c.Controller, nil, "err:"+err.Error(), 500)
 		return
 	}
 	util.Json(c.Controller, res, "success", 200)
+	return
+}
+
+func (c *ScoreController) AddScore() {
+	data := c.Ctx.Input.RequestBody
+	score := models.Score{}
+
+	fmt.Println("<<<<<<", score)
+	if err := json.Unmarshal(data, &score); err != nil {
+		fmt.Println("<<<<<<<<<")
+		util.Json(c.Controller, nil, "err:"+err.Error(), 500)
+		return
+	}
+	fmt.Println("<<<<<<", score)
+	if err := service.AddScore(&score); err != nil {
+		util.Json(c.Controller, nil, "err:"+err.Error(), 500)
+		return
+	}
+	util.Json(c.Controller, "", "success", 200)
 	return
 }

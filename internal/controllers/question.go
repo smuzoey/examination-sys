@@ -36,11 +36,12 @@ func (this *QuestionController) AddSelectQuestion() {
 		return
 	}
 
-	if err := service.AddSelectQuestion(&res); err != nil {
+	id, err := service.AddSelectQuestion(&res)
+	if err != nil {
 		util.Json(this.Controller, nil, "err:"+err.Error(), 500)
 		return
 	}
-	util.Json(this.Controller, "", "success", 200)
+	util.Json(this.Controller, id, "success", 200)
 	return
 }
 
@@ -54,11 +55,12 @@ func (this *QuestionController) AddFillQuestion() {
 		return
 	}
 
-	if err := service.AddFillQuestion(&res); err != nil {
+	id, err := service.AddFillQuestion(&res)
+	if err != nil {
 		util.Json(this.Controller, nil, "err:"+err.Error(), 500)
 		return
 	}
-	util.Json(this.Controller, "", "success", 200)
+	util.Json(this.Controller, id, "success", 200)
 	return
 }
 
@@ -72,10 +74,41 @@ func (this *QuestionController) AddJudgeQuestion() {
 		return
 	}
 
-	if err := service.AddJudgeQuestion(&res); err != nil {
+	id, err := service.AddJudgeQuestion(&res)
+	if err != nil {
 		util.Json(this.Controller, nil, "err:"+err.Error(), 500)
 		return
 	}
-	util.Json(this.Controller, "", "success", 200)
+	util.Json(this.Controller, id, "success", 200)
+	return
+}
+
+func (this *QuestionController) QueryLastJudgeQuestion() {
+	res, err := service.QueryLastJudgeQuestion()
+	if err != nil {
+		util.Json(this.Controller, nil, "err:"+err.Error(), 500)
+		return
+	}
+	util.Json(this.Controller, res, "success", 200)
+	return
+}
+
+func (this *QuestionController) QueryLastFillQuestion() {
+	res, err := service.QueryLastFillQuestion()
+	if err != nil {
+		util.Json(this.Controller, nil, "err:"+err.Error(), 500)
+		return
+	}
+	util.Json(this.Controller, res, "success", 200)
+	return
+}
+
+func (this *QuestionController) QueryLastSelectQuestion() {
+	res, err := service.QueryLastSelectQuestion()
+	if err != nil {
+		util.Json(this.Controller, nil, "err:"+err.Error(), 500)
+		return
+	}
+	util.Json(this.Controller, res, "success", 200)
 	return
 }

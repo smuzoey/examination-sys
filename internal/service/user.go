@@ -19,3 +19,18 @@ func AddStudent(s *models.Student) error {
 	}
 	return nil
 }
+
+func UpdateStudentSomeValues(s *models.Student) error {
+	if err := dao.DB.UpdateStudentSomeValues(s); err != nil {
+		return err
+	}
+	return nil
+}
+
+func QueryStudentById(id string) (*models.Student, error) {
+	res, err := dao.DB.QueryStudent(id)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}

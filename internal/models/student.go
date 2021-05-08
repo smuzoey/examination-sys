@@ -10,7 +10,7 @@ type Student struct {
 	Tel         string `json:"tel"`
 	Email       string `json:"email"`
 	Pwd         string `json:"pwd"`
-	CardId      string `json:"cardId"`
+	CardId      string `json:"cardId" gorm:"column:cardId"`
 	Sex         string `json:"sex"`
-	Role        string `json:"role"`
+	Role        int    `json:"role"`
 }
