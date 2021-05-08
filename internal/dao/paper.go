@@ -13,3 +13,11 @@ func (d *dao) QueryPaperById(paperId int) (*[]models.Paper, error) {
 	}
 	return &res, nil
 }
+
+func (d *dao) AddPaper(p *models.Paper) error {
+	if err := d.orm.Table("paper_manage").Create(p).Error; err != nil {
+		log.Errorf("add paper error(%v)", err)
+		return err
+	}
+	return nil
+}

@@ -13,7 +13,10 @@ func init() {
 
 	beego.Router("exams/:pageNum/:pageSize", &controllers.ExamController{}, "get:FindExamByPage")
 	beego.Router("exam/:examCode", &controllers.ExamController{}, "get:FindExamById")
-	beego.Router("exam", &controllers.ExamController{}, "post:UpdateExam")
+	beego.Router("exam/:examCode", &controllers.ExamController{}, "delete:DeleteExamById")
+	beego.Router("exam", &controllers.ExamController{}, "post:AddExam")
+	beego.Router("exam", &controllers.ExamController{}, "put:UpdateExam")
+	beego.Router("examManagePaperId", &controllers.ExamController{}, "get:FindLastPaperId")
 
 	beego.Router("paper/:paperId", &controllers.PaperController{}, "get:FindPaperById")
 
@@ -30,3 +33,5 @@ func init() {
 // /api/exam
 // /api/student 添加学生
 // /api/student   只有改变的title 》》》》 put
+
+// api/examManagePaperId

@@ -72,3 +72,8 @@ func (d *dao) UpdateStudent(student *models.Student) error {
 	}
 	return nil
 }
+
+//func (d *dao) UpdateStudentSomeValues(s1 *models.Student) error {
+//	var s2 models.Student
+//	if err := d.orm.Table("student").Where()
+//}

@@ -11,8 +11,8 @@ const (
 	sqlQueryFillByPagerId   = "SELECT fill_question.questionId,fill_question.`subject`,fill_question.question,fill_question.answer,fill_question.analysis,fill_question.score,fill_question.score,fill_question.`level`,fill_question.section FROM fill_question LEFT JOIN paper_manage ON fill_question.questionId = paper_manage.questionId WHERE paper_manage.paperId = ? AND paper_manage.questionType=2"
 	sqlQueryJudgeByPagerId  = "SELECT judge_question.questionId,judge_question.`subject`,judge_question.question,judge_question.answer,judge_question.analysis,judge_question.score,judge_question.`level`,judge_question.section FROM judge_question LEFT JOIN paper_manage ON judge_question.questionId = paper_manage.questionId WHERE paper_manage.paperId = ? AND paper_manage.questionType=3"
 
-	sqlQueryQuestionsByPage = "select question, subject, score, section,level, \"选择题\" as type from multi_question union select  question, subject, score, section,level, \"判断题\" as type  from judge_question union select  question, subject, score, section,level, \"填空题\" as type from fill_question offset ? limit ?"
-	sqlQueryQuestionsCount  = "select question, subject, score, section,level, \"选择题\" as type from multi_question union select  question, subject, score, section,level, \"判断题\" as type  from judge_question union select  question, subject, score, section,level, \"填空题\" as type from fill_question"
+	sqlQueryQuestionsByPage = "select question, subject, score, section,level, \"选择题\" as type from multi_question union select  question, subject, score, section,level, \"判断题\" as type  from judge_question union select  question, subject, score, section,level, \"填空题\" as type from fill_question"
+	sqlQueryQuestionsCount  = "select sum(x) from (select count(*) as x from multi_question union select count(*) as x from judge_question union select count(*) as x from fill_question) as total"
 )
 
 func (d *dao) QuerySelectQuestionByPaperId(paperId int) (*[]models.SelectQuestion, error) {
@@ -48,22 +48,46 @@ func (d *dao) QueryQuestionsByPage(pageNum, pageSize int) (*models.Page, error) 
 		res   []models.Question
 		count int64
 	)
-	if err := d.orm.Raw(sqlQueryQuestionsByPage, (pageNum-1)*pageSize, pageSize).Scan(&res).Error; err != nil {
+	if err := d.orm.Raw(sqlQueryQuestionsByPage).Scan(&res).Error; err != nil {
 		log.Errorf("raw query questions by page err(%v)", err)
 		return nil, err
 	}
+	ans := res[(pageNum-1)*pageSize : pageNum*pageSize]
 
-	if err := d.orm.Raw(sqlQueryQuestionsCount).Count(&count).Error; err != nil {
+	if err := d.orm.Raw(sqlQueryQuestionsCount).Scan(&count).Error; err != nil {
 		log.Errorf("raw query question count err(%v)", err)
 		return nil, err
 	}
 
 	pageRes := models.Page{
-		Records: res,
+		Records: ans,
 		Total:   count,
 		Size:    pageSize,
 		Current: pageNum,
 	}
 	return &pageRes, nil
+}
 
+func (d *dao) AddSelectQuestion(question *models.SelectQuestion) error {
+	if err := d.orm.Table("multi_question").Create(question).Error; err != nil {
+		log.Errorf("add select question wrong(%v)", err)
+		return err
+	}
+	return nil
+}
+
+func (d *dao) AddFillQuestion(question *models.FillQuestion) error {
+	if err := d.orm.Table("fill_question").Create(question).Error; err != nil {
+		log.Errorf("add fill question error(%v)", err)
+		return err
+	}
+	return nil
+}
+
+func (d *dao) AddJudgeQuestion(question *models.JudgeQuestion) error {
+	if err := d.orm.Table("judge_question").Create(question).Error; err != nil {
+		log.Errorf("add judge question error(%v)", err)
+		return err
+	}
+	return nil
 }

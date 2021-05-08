@@ -53,3 +53,39 @@ func (this *ExamController) UpdateExam() {
 	util.Json(this.Controller, "", "success", 200)
 	return
 }
+
+// add paper
+func (this *ExamController) AddExam() {
+	data := this.Ctx.Input.RequestBody
+	exam := models.ExamManage{}
+
+	if err := json.Unmarshal(data, &exam); err != nil {
+		util.Json(this.Controller, nil, "json unmarshal wrong:"+err.Error(), 500)
+		return
+	}
+	if err := service.AddExam(&exam); err != nil {
+		util.Json(this.Controller, nil, "err", 500)
+		return
+	}
+
+	util.Json(this.Controller, "", "success", 200)
+	return
+}
+
+func (this *ExamController) DeleteExamById() {
+	examCode, _ := strconv.Atoi(this.Ctx.Input.Param(":examCode"))
+	if err := service.DeleteExam(examCode); err != nil {
+		util.Json(this.Controller, nil, "err", 500)
+		return
+	}
+	util.Json(this.Controller, "", "success", 200)
+}
+
+func (this *ExamController) FindLastPaperId() {
+	res, err := service.FindLastPaperId()
+	if err != nil {
+		util.Json(this.Controller, nil, "err", 500)
+		return
+	}
+	util.Json(this.Controller, res, "success", 200)
+}

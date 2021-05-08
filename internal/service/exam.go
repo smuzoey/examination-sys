@@ -26,7 +26,6 @@ func QueryExamById(id int) (*models.ExamManage, error) {
 
 func AddExam(exam *models.ExamManage) error {
 	if err := dao.DB.AddExam(exam); err != nil {
-		log.Error("add exam wrong")
 		return err
 	}
 	return nil
@@ -37,4 +36,19 @@ func UpdateExam(exam *models.ExamManage) error {
 		return err
 	}
 	return nil
+}
+
+func DeleteExam(examCode int) error {
+	if err := dao.DB.DeleteExam(examCode); err != nil {
+		return err
+	}
+	return nil
+}
+
+func FindLastPaperId() (*models.ExamManage, error) {
+	res, err := dao.DB.FindLastPaperId()
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
 }

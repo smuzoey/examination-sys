@@ -12,3 +12,24 @@ func QueryQuestionsByPage(pageNum, pageSize int) (*models.Page, error) {
 	}
 	return res, nil
 }
+
+func AddSelectQuestion(question *models.SelectQuestion) error {
+	if err := dao.DB.AddSelectQuestion(question); err != nil {
+		return err
+	}
+	return nil
+}
+
+func AddFillQuestion(question *models.FillQuestion) error {
+	if err := dao.DB.AddFillQuestion(question); err != nil {
+		return err
+	}
+	return nil
+}
+
+func AddJudgeQuestion(question *models.JudgeQuestion) error {
+	if err := dao.DB.AddJudgeQuestion(question); err != nil {
+		return err
+	}
+	return nil
+}

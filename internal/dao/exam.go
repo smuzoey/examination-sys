@@ -16,9 +16,16 @@ func (d *dao) QueryExamById(id int) (*models.ExamManage, error) {
 }
 
 func (d *dao) AddExam(e *models.ExamManage) error {
-	//if err := d.orm.Model(models.ExamManage{}).Create(e).Error; err != nil {
 	if err := d.orm.Table("exam_manage").Create(e).Error; err != nil {
 		log.Errorf("exam insert exam error(%v)", err)
+		return err
+	}
+	return nil
+}
+
+func (d *dao) DeleteExam(examCode int) error {
+	if err := d.orm.Table("exam_manage").Where("examCode=?", examCode).Delete(&models.ExamManage{}).Error; err != nil {
+		log.Errorf("exam delete error(%v)", err)
 		return err
 	}
 	return nil
@@ -57,4 +64,13 @@ func (d *dao) UpdateExam(exam *models.ExamManage) error {
 		return err
 	}
 	return nil
+}
+
+func (d *dao) FindLastPaperId() (*models.ExamManage, error) {
+	var exam models.ExamManage
+	if err := d.orm.Table("exam_manage").Order("paperId desc").Limit(1).Find(&exam).Error; err != nil {
+		log.Errorf("find last paper id error(%v)", err)
+		return nil, err
+	}
+	return &exam, nil
 }

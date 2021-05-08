@@ -28,16 +28,22 @@ type Dao interface {
 	QueryExamByPage(pageNum, pageSize int) (*models.Page, error)
 	QueryExamById(id int) (*models.ExamManage, error)
 	AddExam(e *models.ExamManage) error
+	DeleteExam(examCode int) error
 	UpdateExam(exam *models.ExamManage) error
+	FindLastPaperId() (*models.ExamManage, error)
 
 	// paper
 	QueryPaperById(paperId int) (*[]models.Paper, error)
+	AddPaper(p *models.Paper) error
 
 	// question
 	QuerySelectQuestionByPaperId(paperId int) (*[]models.SelectQuestion, error)
 	QueryFillQuestionByPaperId(paperId int) (*[]models.FillQuestion, error)
 	QueryJudgeQuestionByPaperId(paperId int) (*[]models.JudgeQuestion, error)
 	QueryQuestionsByPage(pageNum, pageSize int) (*models.Page, error)
+	AddSelectQuestion(question *models.SelectQuestion) error
+	AddFillQuestion(question *models.FillQuestion) error
+	AddJudgeQuestion(question *models.JudgeQuestion) error
 
 	// message
 	QueryMessageByPage(pageNum, pageSize int) (*models.Page, error)

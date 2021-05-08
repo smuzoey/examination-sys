@@ -48,4 +48,5 @@ type Question struct {
 	Score    string `json:"score"`
 	Section  string `json:"section"`
 	Type     string `json:"type"`
+	Level    string `json:"level"`
 }
