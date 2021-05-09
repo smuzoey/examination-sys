@@ -52,3 +52,11 @@ func FindLastPaperId() (*models.ExamManage, error) {
 	}
 	return res, nil
 }
+
+func FindAllExams() (*[]models.ExamManage, error) {
+	res, err := dao.DB.FindAllExams()
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}

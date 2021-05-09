@@ -32,10 +32,12 @@ type Dao interface {
 	DeleteExam(examCode int) error
 	UpdateExam(exam *models.ExamManage) error
 	FindLastPaperId() (*models.ExamManage, error)
+	FindAllExams() (*[]models.ExamManage, error)
 
 	// paper
 	QueryPaperById(paperId int) (*[]models.Paper, error)
 	AddPaper(p *models.Paper) error
+	AddBatchPaper(p *[]models.Paper) error
 
 	// question
 	QuerySelectQuestionByPaperId(paperId int) (*[]models.SelectQuestion, error)
@@ -51,6 +53,8 @@ type Dao interface {
 	QueryLastJudgeQuestion() (*models.JudgeQuestion, error)
 	QueryLastSelectQuestion() (*models.SelectQuestion, error)
 	QueryLastFillQuestion() (*models.FillQuestion, error)
+
+	QueryQuestionByInherit() (*[]models.Problem, error)
 
 	// message
 	QueryMessageByPage(pageNum, pageSize int) (*models.Page, error)

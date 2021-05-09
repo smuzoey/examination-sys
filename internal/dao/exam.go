@@ -74,3 +74,12 @@ func (d *dao) FindLastPaperId() (*models.ExamManage, error) {
 	}
 	return &exam, nil
 }
+
+func (d *dao) FindAllExams() (*[]models.ExamManage, error) {
+	var exam []models.ExamManage
+	if err := d.orm.Table("exam_manage").Find(&exam).Error; err != nil {
+		log.Errorf("find add exam error (%v)", err)
+		return nil, err
+	}
+	return &exam, nil
+}

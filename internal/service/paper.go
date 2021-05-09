@@ -38,3 +38,10 @@ func AddQuestionToPaper(paper *models.Paper) error {
 	}
 	return nil
 }
+
+func AddBatchQuetionToPaper(p *[]models.Paper) error {
+	if err := dao.DB.AddBatchPaper(p); err != nil {
+		return err
+	}
+	return nil
+}

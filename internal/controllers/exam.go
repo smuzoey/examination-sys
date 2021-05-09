@@ -42,7 +42,7 @@ func (this *ExamController) UpdateExam() {
 	exam := models.ExamManage{}
 
 	if err := json.Unmarshal(data, &exam); err != nil {
-		util.Json(this.Controller, nil, "err", 500)
+		util.Json(this.Controller, nil, "err"+err.Error(), 500)
 		return
 	}
 	if err := service.UpdateExam(&exam); err != nil {
@@ -83,6 +83,15 @@ func (this *ExamController) DeleteExamById() {
 
 func (this *ExamController) FindLastPaperId() {
 	res, err := service.FindLastPaperId()
+	if err != nil {
+		util.Json(this.Controller, nil, "err", 500)
+		return
+	}
+	util.Json(this.Controller, res, "success", 200)
+}
+
+func (this *ExamController) FindAllExams() {
+	res, err := service.FindAllExams()
 	if err != nil {
 		util.Json(this.Controller, nil, "err", 500)
 		return

@@ -16,6 +16,9 @@ const (
 
 	sqlQueryQuestionsByPage = "select question, subject, score, section,level, \"选择题\" as type from multi_question union select  question, subject, score, section,level, \"判断题\" as type  from judge_question union select  question, subject, score, section,level, \"填空题\" as type from fill_question"
 	sqlQueryQuestionsCount  = "select sum(x) from (select count(*) as x from multi_question union select count(*) as x from judge_question union select count(*) as x from fill_question) as total"
+
+	// 选择题：1， 判断题2，填空题3
+	sqlQueryQuestionsByInherit = "select questionId, question, score, section, level, 1 as type from multi_question union select  questionId,question, score, section,level, 2 as type  from judge_question union select  questionId, question,  score, section,level, 3 as type from fill_question"
 )
 
 func (d *dao) QuerySelectQuestionByPaperId(paperId int) (*[]models.SelectQuestion, error) {
@@ -158,6 +161,16 @@ func (d *dao) QueryLastFillQuestion() (*models.FillQuestion, error) {
 	res := models.FillQuestion{}
 	if err := d.orm.Table("fill_question").Order("questionId desc").Limit(1).Find(&res).Error; err != nil {
 		log.Errorf("query last fill question(%v)", err)
+		return nil, err
+	}
+	return &res, nil
+}
+
+func (d *dao) QueryQuestionByInherit() (*[]models.Problem, error) {
+	var res []models.Problem
+
+	if err := d.orm.Raw(sqlQueryQuestionsByInherit).Scan(&res).Error; err != nil {
+		log.Errorf("raw query questions by page err(%v)", err)
 		return nil, err
 	}
 	return &res, nil

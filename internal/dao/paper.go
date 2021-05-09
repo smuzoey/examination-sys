@@ -21,3 +21,11 @@ func (d *dao) AddPaper(p *models.Paper) error {
 	}
 	return nil
 }
+
+func (d *dao) AddBatchPaper(p *[]models.Paper) error {
+	if err := d.orm.Table("paper_manage").CreateInBatches(p, len(*p)).Error; err != nil {
+		log.Errorf("add batch paper error(%v)", err)
+		return err
+	}
+	return nil
+}

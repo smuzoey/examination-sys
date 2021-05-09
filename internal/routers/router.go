@@ -14,6 +14,7 @@ func init() {
 	beego.Router("student/:studentId", &controllers.UserController{}, "get:QueryStudentById")
 
 	beego.Router("exams/:pageNum/:pageSize", &controllers.ExamController{}, "get:FindExamByPage")
+	beego.Router("exams", &controllers.ExamController{}, "get:FindAllExams")
 	beego.Router("exam/:examCode", &controllers.ExamController{}, "get:FindExamById")
 	beego.Router("exam/:examCode", &controllers.ExamController{}, "delete:DeleteExamById")
 	beego.Router("exam", &controllers.ExamController{}, "post:AddExam")
@@ -38,10 +39,7 @@ func init() {
 	beego.Router("judgeQuestionId", &controllers.QuestionController{}, "get:QueryLastJudgeQuestion")
 	beego.Router("multiQuestionId", &controllers.QuestionController{}, "get:QueryLastSelectQuestion")
 	beego.Router("fillQuestionId", &controllers.QuestionController{}, "get:QueryLastFillQuestion")
+
+	beego.Router("item", &controllers.PaperController{}, "post:GroupPaper")
+	//beego.Router("item", &controllers.PaperController{}, "post:Test")
 }
-
-// /api/exam
-// /api/student 添加学生
-// /api/student   只有改变的title 》》》》 put
-
-// api/examManagePaperId
